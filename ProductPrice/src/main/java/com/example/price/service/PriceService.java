@@ -13,12 +13,14 @@ public class PriceService {
 	@Autowired
 	PriceRepository repository;
 
-	public void _saveProductPrice(Price price) {
-		repository.save(price);
+	public Price _saveProductPrice(Price price) {
+		return repository.save(price);
 	}
 
 	public Optional<Price> _getProductPrice(String productId) {
 		return repository.findByProductId(productId);
 	}
+	
+	
 
 }

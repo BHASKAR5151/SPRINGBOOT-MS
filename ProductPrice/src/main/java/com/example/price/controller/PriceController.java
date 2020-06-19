@@ -18,26 +18,28 @@ import com.example.price.service.PriceService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/price")
+@RequestMapping("/priceController")
 public class PriceController {
 
 	@Autowired
 	PriceService productService;
+
 	@ApiOperation("Save Price")
 	@PostMapping("/product")
-	void _savePrice(@RequestBody Price product) {
-		productService._saveProductPrice(product);
-		System.out.println("product Details" + product);
+	ResponseEntity<Price> _savePrice(@RequestBody Price price) {
+		Price price1=productService._saveProductPrice(price);
+		System.out.println("product Details" + price);
+		return new ResponseEntity<Price>(price1, HttpStatus.OK);
 	}
 
 	@GetMapping("/prodID/{pId}")
 	ResponseEntity<Price> _getPrice(@PathVariable String pId) {
-		System.out.println("WE ARE TRYONG TO GET PRODUCT");
+		System.out.println("WE ARE TRYONG TO GET PRICE");
 		Optional<Price> product = productService._getProductPrice(pId);
+		//Optional<String> p=Optional.empty();
 		if (product.isPresent()) {
 			return new ResponseEntity<Price>(product.get(), HttpStatus.OK);
 		}
 		return new ResponseEntity<Price>(HttpStatus.NOT_FOUND);
 	}
-
 }
